@@ -12,6 +12,10 @@ using CoreLeaveManagement.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using CoreLeaveManagement.Web.Repository;
+using CoreLeaveManagement.Web.Contracts;
+using AutoMapper;
+using CoreLeaveManagement.Web.ModelMappings;
 
 namespace CoreLeaveManagement.Web
 {
@@ -30,6 +34,14 @@ namespace CoreLeaveManagement.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add references for coontracts and repositories
+            services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
+            services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+            services.AddScoped<ILeaveHistoryRepository, LeaveHistoryRepository>();
+
+            services.AddAutoMapper(typeof(Maps));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

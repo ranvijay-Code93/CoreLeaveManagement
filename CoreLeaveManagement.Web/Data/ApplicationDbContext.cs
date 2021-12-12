@@ -12,5 +12,10 @@ namespace CoreLeaveManagement.Web.Data
             : base(options)
         {
         }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<LeaveType> LeaveTypes { get; set; }
+        public DbSet<LeaveAllocation> LeaveAllocationes { get; set; }
+        public DbSet<LeaveHistory> LeaveHistories { get; set; }
     }
 }
