@@ -23,6 +23,6 @@ namespace CoreLeaveManagement.Web.Models
         public EmployeeViewModel ApprovedBy { get; set; }
         public int LeaveTypeId { get; set; }
         public IEnumerable<SelectListItem> LeaveTypes { get; set; }
-        public DetailsLeaveTypeViewModel LeaveType { get; set; }
+        public LeaveTypeViewModel LeaveType { get; set; }
     }
 }
