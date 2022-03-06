@@ -38,6 +38,11 @@ namespace CoreLeaveManagement.Web.Repository
             return leaveHistory;
         }
 
+        public bool IsExist(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Save()
         {
             var rowsAffected = _context.SaveChanges();

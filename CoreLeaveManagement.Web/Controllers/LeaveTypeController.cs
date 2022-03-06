@@ -33,7 +33,13 @@ namespace CoreLeaveManagement.Web.Controllers
         // GET: LeaveTypeController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (!_leaveTypeRepository.IsExist(id))
+            {
+                return NotFound();
+            }
+            var leaveType = _leaveTypeRepository.FindById(id);
+            var model = _autoMapper.Map<LeaveTypeViewModel>(leaveType);
+            return View(model);
         }
 
         // GET: LeaveTypeController/Create
@@ -67,49 +73,103 @@ namespace CoreLeaveManagement.Web.Controllers
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong...");
+                return View(model);
             }
         }
 
         // GET: LeaveTypeController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (!_leaveTypeRepository.IsExist(id))
+            {
+                return NotFound();
+            }
+            var leaveType = _leaveTypeRepository.FindById(id);
+            var model = _autoMapper.Map<LeaveTypeViewModel>(leaveType);
+            return View(model);
         }
 
         // POST: LeaveTypeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(LeaveTypeViewModel model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var leaveType = _autoMapper.Map<LeaveType>(model);
+                bool isLeaveUpdated = _leaveTypeRepository.Update(leaveType);
+
+                if (!isLeaveUpdated)
+                {
+                    ModelState.AddModelError("", "Something went wrong...");
+                    return View(model);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong...");
+                return View(model);
             }
         }
 
         // GET: LeaveTypeController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            //if (!_leaveTypeRepository.IsExist(id))
+            //{
+            //    return NotFound();
+            //}
+            //var leaveType = _leaveTypeRepository.FindById(id);
+            //var model = _autoMapper.Map<LeaveTypeViewModel>(leaveType);
+            //return View(model);
+
+            var leaveType = _leaveTypeRepository.FindById(id);
+            if (leaveType == null)
+            {
+                return NotFound();
+            }
+            bool isLeaveDeleted = _leaveTypeRepository.Delete(leaveType);
+
+            if (!isLeaveDeleted)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
+
         }
 
         // POST: LeaveTypeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, LeaveTypeViewModel model)
         {
             try
             {
+                var leaveType = _leaveTypeRepository.FindById(id);
+                if(leaveType == null)
+                {
+                    return NotFound();
+                }
+                bool isLeaveDeleted = _leaveTypeRepository.Delete(leaveType);
+
+                if (!isLeaveDeleted)
+                {
+                    ModelState.AddModelError("", "Something went wrong...");
+                    return View(model);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong...");
+                return View(model);
             }
         }
     }

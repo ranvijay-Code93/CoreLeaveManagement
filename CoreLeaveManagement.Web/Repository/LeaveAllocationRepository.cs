@@ -39,6 +39,11 @@ namespace CoreLeaveManagement.Web.Repository
             return leaveAllocation;
         }
 
+        public bool IsExist(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Save()
         {
             var rowsAffected = _context.SaveChanges();

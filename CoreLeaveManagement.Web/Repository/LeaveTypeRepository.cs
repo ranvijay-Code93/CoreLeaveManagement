@@ -44,6 +44,12 @@ namespace CoreLeaveManagement.Web.Repository
             throw new NotImplementedException();
         }
 
+        public bool IsExist(int id)
+        {
+            bool isExist = _context.LeaveTypes.Any(t => t.Id == id);
+            return isExist;
+        }
+
         public bool Save()
         {
             var rowsAffected = _context.SaveChanges();
