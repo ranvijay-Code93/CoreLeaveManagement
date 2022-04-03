@@ -18,6 +18,5 @@ namespace CoreLeaveManagement.Web.Data
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<LeaveAllocation> LeaveAllocationes { get; set; }
         public DbSet<LeaveHistory> LeaveHistories { get; set; }
-        public DbSet<CoreLeaveManagement.Web.Models.LeaveTypeViewModel> LeaveTypeViewModel { get; set; }
     }
 }
