@@ -10,8 +10,8 @@ namespace CoreLeaveManagement.Web
     {
         public static void Seed(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            SeedUsers(userManager);
             SeedRoles(roleManager);
+            SeedUsers(userManager);
         }
 
         private static void SeedUsers(UserManager<IdentityUser> userManager)
